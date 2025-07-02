@@ -1,1 +1,130 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Junior | Frontend Developer</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
+
+  <header class="header" id="home">
+    <nav class="navbar">
+      <div class="logo-section">
+        <img src="profile.jpg" alt="Profile" class="logo-image" />
+        <h1 class="logo">JavaScript Junior</h1>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero animate-on-scroll">
+    <div class="hero-text">
+      <h2>Hi, I'm JavaScript Junior</h2>
+      <p>Professional Frontend Developer</p>
+      <a href="#projects" class="btn">View My Work</a>
+    </div>
+  </section>
+
+  <section id="projects" class="projects animate-on-scroll">
+    <h2>Featured Projects</h2>
+    <div class="project-grid hidden">
+      <div class="project-card">
+        <h3>Modern Landing Page</h3>
+        <p>Built with HTML, CSS, and JavaScript.</p>
+        <a href="https://github.com/javascriptjunior/modern-landing-page" target="_blank">Live Demo</a>
+      </div>
+      <div class="project-card">
+        <h3>React Dashboard</h3>
+        <p>Fully responsive and data-driven UI.</p>
+        <a href="https://github.com/javascriptjunior/react-dashboard" target="_blank">View Project</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="services animate-on-scroll">
+    <h2>What I Offer</h2>
+    <ul>
+      <li>⚡ PSD/Figma to HTML Conversion</li>
+      <li>⚡ Responsive Frontend Development</li>
+      <li>⚡ React/Vue Component Design</li>
+      <li>⚡ Web Animations with GSAP or Framer Motion</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="contact animate-on-scroll">
+    <h2>Contact Me</h2>
+    <form id="contact-form">
+      <input type="text" name="from_name" placeholder="Your Name" required />
+      <input type="email" name="reply_to" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 JavaScript Junior | All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Initialize EmailJS
+    (function () {
+      emailjs.init("T-_9tlBYG2Y17cZP5");
+    })();
+
+    // Handle contact form submission
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      emailjs.sendForm("service_etxixzh", "template_oi3vfel", this)
+        .then(function () {
+          alert("✅ Message sent successfully!");
+          e.target.reset();
+        }, function (error) {
+          alert("❌ Failed to send message. Please try again.");
+          console.error("EmailJS error:", error);
+        });
+    });
+
+    // Toggle mobile menu
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const section = document.querySelector(this.getAttribute('href'));
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById("navLinks").classList.remove("show");
+        }
+      });
+    });
+
+    // Scroll animation observer
+    const animElements = document.querySelectorAll('.animate-on-scroll, .project-grid');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated', 'reveal');
+          entry.target.classList.remove('hidden');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    animElements.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+  </html>
